@@ -33,9 +33,9 @@ app.use(bodyParser.json());
 
 app.use('/api', authRoutes);
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/views/index.html'));
-});
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../frontend/views/index.html'));
+// });
 
 
 const PORT = process.env.PORT || 3000;
