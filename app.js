@@ -9,7 +9,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 
 const corsOptions = {
-    origin: 'https://helios-front.vercel.app/',
+    origin: 'https://helios-front.vercel.app',
     methods: 'GET,POST,PUT,DELETE',
     allowedHeaders: 'Content-Type',
 };
