@@ -29,7 +29,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, '../frontend/')));
+app.use(express.static(path.join(__dirname, '../frontend/views')));
 
 app.use('/api', authRoutes);
 
