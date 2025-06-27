@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
+const clienteRoutes = require('./routes/clientes');
 const path = require('path');
 const cors = require('cors');
 const app = express();
@@ -31,6 +32,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../views')));
 
 app.use('/api', authRoutes);
+app.use('/api/cliente', clienteRoutes);
 
 // app.get('/', (req, res) => {
 //     res.sendFile(path.join(__dirname, '../frontend/views/index.html'));
