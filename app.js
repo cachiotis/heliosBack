@@ -8,7 +8,6 @@ const cors = require('cors');
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 
-// ⚠️ Agrega la URL de tu frontend en Netlify
 const corsOptions = {
     origin: 'https://helios-front.vercel.app/',
     methods: 'GET,POST,PUT,DELETE',
