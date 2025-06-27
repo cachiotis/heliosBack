@@ -15,7 +15,7 @@ router.post('/', auth, async (req, res) => {
             telefono,
             direccion,
             descripcionCaso,
-            usuarioId: req.usuario.id
+            usuarioId: req.User.id
         });
 
         await cliente.save();
@@ -30,7 +30,7 @@ router.post('/', auth, async (req, res) => {
 // Obtener todas las personas vinculadas al usuario autenticado
 router.get('/', auth, async (req, res) => {
     try {
-        const clientes = await Client.find({ usuarioId: req.usuario.id });
+        const clientes = await Client.find({ usuarioId: req.User.id });
         res.json(clientes);
     } catch (err) {
         console.error(err);
