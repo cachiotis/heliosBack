@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // ⚠️ Agrega la URL de tu frontend en Netlify
 const corsOptions = {
-    origin: 'https://polite-malasada-6d9952.netlify.app',
+    origin: 'https://helios-front.vercel.app/',
     methods: 'GET,POST,PUT,DELETE',
     allowedHeaders: 'Content-Type',
 };
