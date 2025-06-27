@@ -3,12 +3,10 @@ const router = express.Router();
 const Client = require('../models/cliente');
 const auth = require('../middleware/auth');
 
-// Crear un nuevo registro de persona vinculada al usuario autenticado
 router.post('/', auth, async (req, res) => {
     try {
         const { nombre, cedula, telefono, direccion, descripcionCaso } = req.body;
 
-        // Crear nueva persona vinculada al usuario que está logueado
         const cliente = new Client({
             nombre,
             cedula,
@@ -27,7 +25,6 @@ router.post('/', auth, async (req, res) => {
     }
 });
 
-// Obtener todas las personas vinculadas al usuario autenticado
 router.get('/', auth, async (req, res) => {
     try {
         const clientes = await Client.find({ usuarioId: req.User.id });

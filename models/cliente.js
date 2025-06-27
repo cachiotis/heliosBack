@@ -11,4 +11,4 @@ const clientSchema = new mongoose.Schema({
     usuarioId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 });
 
-module.exports = mongoose.model('Client', clientSchema);
+module.exports = mongoose.model('Cliente', clientSchema);
