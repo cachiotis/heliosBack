@@ -1,6 +1,9 @@
 const jwt = require('jsonwebtoken');
 
 function auth(req, res, next) {
+    console.log(`[Auth Middleware] Ruta: ${req.method} ${req.path}`);
+    console.log('[Auth Middleware] Cabeceras recibidas:', JSON.stringify(req.headers, null, 2));
+
     // Espera que el token venga en el header:
     // Authorization: Bearer <token>
     const tokenHeader = req.header('Authorization');
@@ -21,12 +24,12 @@ function auth(req, res, next) {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         // decoded será: { id: <user._id>, iat: ..., exp: ... }
-        req.usuario = { id: decoded.id }; 
+        req.User = { id: decoded.id };    // LÍNEA CORREGIDA (U mayúscula)
 
         next(); // continuar al siguiente middleware o ruta
     } catch (err) {
-        console.error('Token inválido:', err);
-        res.status(401).json({ msg: 'Token no válido' });
+        console.error('Error de verificación de token:', err.name, err.message); // Log más detallado
+        res.status(401).json({ msg: 'Token no válido', errorType: err.name }); // Opcional: enviar tipo de error al cliente
     }
 }
 

@@ -6,7 +6,7 @@ const clientSchema = new mongoose.Schema({
     telefono: { type: Number },
     direccion: { type: String },
     descripcionCaso: { type: String },
-    estado: { type: String, default: 'En trámite' },
+    estado: { type: String },
     fechaCreacion: { type: Date, default: Date.now },
     usuarioId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 });
