@@ -29,15 +29,15 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, '../frontend')));
+// app.use(express.static(path.join(__dirname, '../frontend')));
 
 app.use('/api', authRoutes);
 app.use('/clientes', clienteRoutes);
 app.use('/clientes', clienteRoutes);
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/index.html'));
-});
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../frontend/index.html'));
+// });
 
 
 const PORT = process.env.PORT || 3000;
