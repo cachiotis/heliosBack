@@ -10,9 +10,11 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 
 const corsOptions = {
-    origin: 'https://helios-front.vercel.app',
-    methods: 'GET,POST,PUT,DELETE',
-    allowedHeaders: 'Content-Type',
+    origin: 'https://helios-front.vercel.app', // Reemplaza con la URL de tu frontend desplegado
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Métodos que permites
+    allowedHeaders: ['Content-Type', 'Authorization'], // IMPORTANTE: Incluye 'Authorization'
+    credentials: true, // Si manejas cookies o sesiones a través de dominios
+    optionsSuccessStatus: 200 // Para compatibilidad con navegadores más antiguos
 };
 
 app.use(cors(corsOptions));
@@ -33,7 +35,8 @@ app.use(bodyParser.json());
 
 app.use('/api', authRoutes);
 app.use('/clientes', clienteRoutes);
-app.use('/clientes', clienteRoutes);
+app.use('/api/login', require('./routes/auth')); // Tu ruta de login (basado en acceso.js)
+
 
 // app.get('/', (req, res) => {
 //     res.sendFile(path.join(__dirname, '../frontend/index.html'));
