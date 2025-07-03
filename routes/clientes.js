@@ -36,9 +36,47 @@ router.get('/', auth, async (req, res) => {
     }
 });
 
-// @route   DELETE api/clientes/:id
-// @desc    Eliminar un cliente
-// @access  Private
+router.put('/:id', auth, async (req, res) => {
+    try {
+        const { nombre, cedula, telefono, direccion, descripcionCaso, estado } = req.body;
+        let cliente = await Client.findById(req.params.id);
+
+        if (!cliente) {
+            return res.status(404).json({ msg: 'Cliente no encontrado' });
+        }
+
+        if (cliente.usuarioId.toString() !== req.User.id) {
+            return res.status(401).json({ msg: 'No autorizado para actualizar este cliente' });
+        }
+
+        const camposActualizar = {};
+        if (nombre !== undefined) camposActualizar.nombre = nombre;
+        if (cedula !== undefined) camposActualizar.cedula = cedula;
+        if (telefono !== undefined) camposActualizar.telefono = telefono;
+        if (direccion !== undefined) camposActualizar.direccion = direccion;
+        if (descripcionCaso !== undefined) camposActualizar.descripcionCaso = descripcionCaso;
+        if (estado !== undefined) camposActualizar.estado = estado;
+
+        if (Object.keys(camposActualizar).length === 0) {
+            return res.status(400).json({ msg: 'No se proporcionaron campos para actualizar' });
+        }
+
+        cliente = await Client.findByIdAndUpdate(
+            req.params.id,
+            { $set: camposActualizar },
+            { new: true }
+        );
+
+        res.json({ msg: 'Cliente actualizado', cliente });
+    } catch (err) {
+        console.error('Error en PUT /clientes/:id:', err.message);
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ msg: 'Cliente no encontrado (ID mal formado)' });
+        }
+        res.status(500).send('Error del Servidor');
+    }
+});
+
 router.delete('/:id', auth, async (req, res) => {
     try {
         let cliente = await Client.findById(req.params.id);
@@ -47,15 +85,11 @@ router.delete('/:id', auth, async (req, res) => {
             return res.status(404).json({ msg: 'Cliente no encontrado' });
         }
 
-        // Asegurarse que el usuario es dueño del cliente
-        // Asumiendo que tu modelo Cliente tiene un campo 'usuarioId' que referencia al usuario
-        // y que req.User.id es el id del usuario autenticado (establecido por el middleware auth).
         if (cliente.usuarioId.toString() !== req.User.id) {
             return res.status(401).json({ msg: 'No autorizado para eliminar este cliente' });
         }
 
         await Client.findByIdAndDelete(req.params.id);
-        // O si usas Mongoose >= 5 y quieres el documento eliminado: await Client.findByIdAndRemove(req.params.id);
 
         res.json({ msg: 'Cliente eliminado' });
     } catch (err) {
