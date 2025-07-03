@@ -38,9 +38,9 @@ app.use('/clientes', clienteRoutes);
 app.use('/api/login', require('./routes/auth')); // Tu ruta de login (basado en acceso.js)
 
 
-// app.get('/', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../frontend/index.html'));
-// });
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '/views/index.html'));
+});
 
 
 const PORT = process.env.PORT || 3000;
